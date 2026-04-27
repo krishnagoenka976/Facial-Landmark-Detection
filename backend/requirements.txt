@@ -1,0 +1,6 @@
+flask
+flask-cors
+gunicorn
+tensorflow==2.16.1
+opencv-contrib-python-headless
+Pillow
