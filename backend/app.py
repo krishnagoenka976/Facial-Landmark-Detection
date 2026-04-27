@@ -78,7 +78,13 @@ def predict():
         
         if face_cascade is not None:
             # 1. Detect the face using a standard Haar Cascade
-            faces = face_cascade.detectMultiScale(gray, 1.1, 4)
+            faces = list(face_cascade.detectMultiScale(gray, 1.1, 4))
+            
+            # Fallback: If no face bounding box is found (very common on extremely close-cropped 48x48 images),
+            # assume the whole image frame is the face.
+            if len(faces) == 0:
+                img_h, img_w = gray.shape
+                faces = [(0, 0, img_w, img_h)]
             
             for (x, y, w, h) in faces:
                 # 2. IMPORTANT: Create a SQUARE region of interest (ROI)
